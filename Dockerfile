@@ -2,9 +2,13 @@ FROM python:3.10-slim-bullseye
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+
+# Pip ko update karke install karne se speed badh jati hai
+RUN pip3 install --upgrade pip
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD python3 main.py
-# +++ Modified By Yato [telegram username: @i_killed_my_clan & @ProYato] +++ # aNDI BANDI SANDI JISNE BHI CREDIT HATAYA USKI BANDI RAndi 
+# Check kar lena file ka naam main.py hai ya bot.py
+CMD ["python3", "main.py"]
+
