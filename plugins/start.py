@@ -7,7 +7,7 @@ from collections import defaultdict
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode, ChatMemberStatus, ChatAction
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
-from pyrogram.errors import FloodWait, UserNotParticipant, UserIsBlocked, InputUserDeactivated
+from pyrogram.errors import FloodWait, UserNotParticipant, UserIsBlocked, InputUserDeactivated, MessageNotModified
 import os
 import asyncio
 from asyncio import sleep
@@ -558,31 +558,32 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             pass
     
     elif data == "about":
-        user = await client.get_users(OWNER_ID)
-        user_link = f"https://t.me/{user.username}" if user.username else f"tg://openmessage?user_id={OWNER_ID}"
-        
-        await query.edit_message_media(
-            InputMediaPhoto(
-                "https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg",
-                ABOUT_TXT
-            ),
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton('• ʙᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('ᴄʟᴏsᴇ •', callback_data='close')]
-            ]),
-        )
+        try:
+            await query.edit_message_media(
+                InputMediaPhoto(
+                    "https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg",
+                    ABOUT_TXT
+                ),
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton('• ʙᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('ᴄʟᴏsᴇ •', callback_data='close')]
+                ]),
+            )
+        except MessageNotModified:
+            await query.answer("ʏᴏᴜ ᴀʀᴇ ᴀʟʀᴇᴀᴅʏ ɪɴ ᴀʙᴏᴜᴛ sᴇᴄᴛɪᴏɴ ❗", show_alert=False)
 
     elif data == "channels":
-        user = await client.get_users(OWNER_ID)
-        user_link = f"https://t.me/{user.username}" if user.username else f"tg://openmessage?user_id={OWNER_ID}" 
-        ownername = f"<a href={user_link}>{user.first_name}</a>" if user.first_name else f"<a href={user_link}>no name !</a>"
-        await query.edit_message_media(
-            InputMediaPhoto("https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg", 
-                            CHANNELS_TXT
-            ),
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton('• ʙᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('ᴄʟᴏsᴇ •', callback_data='close')]
-            ]),
-        )
+        try:
+            await query.edit_message_media(
+                InputMediaPhoto("https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg", 
+                                CHANNELS_TXT
+                ),
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton('• ʙᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('ᴄʟᴏsᴇ •', callback_data='close')]
+                ]),
+            )
+        except MessageNotModified:
+            await query.answer("ʏᴏᴜ ᴀʀᴇ ᴀʟʀᴇᴀᴅʏ ɪɴ ᴄʜᴀɴɴᴇʟs sᴇᴄᴛɪᴏɴ ❗", show_alert=False)
+
     elif data in ["start", "home"]:
         inline_buttons = InlineKeyboardMarkup(
             [
@@ -599,13 +600,18 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 ),
                 reply_markup=inline_buttons
             )
+        except MessageNotModified:
+            await query.answer("ʜᴏᴍᴇ ᴘᴀɢᴇ ᴀʟʀᴇᴀᴅʏ ᴏᴘᴇɴ ❗", show_alert=False)
         except Exception as e:
             print(f"Error sending start/home photo: {e}")
-            await query.edit_message_text(
-                START_MSG,
-                reply_markup=inline_buttons,
-                parse_mode=ParseMode.HTML
-            )
+            try:
+                await query.edit_message_text(
+                    START_MSG,
+                    reply_markup=inline_buttons,
+                    parse_mode=ParseMode.HTML
+                )
+            except MessageNotModified:
+                pass
 
 
     elif data.startswith("rfs_ch_"):
