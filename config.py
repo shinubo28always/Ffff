@@ -34,7 +34,7 @@ START_MSG = os.environ.get("START_MSG", "<b>👋 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛ
 HELP = os.environ.get("HELP_MESSAGE", "<b><blockquote expandable>» Creator: <a href=https://t.me/proyato>Yato</a>\n» Our Community: <a href=https://t.me/otakuflix_network>Flix Network</a>\n» Anime Channel: <a href=https://t.me/animes_cruise>Anime Cruise</a>\n» Ongoing Anime: <a href=https://t.me/Ongoing_cruise>Ongoing cruise</a>\n» Developer: <a href=https://t.me/onlyyuji>Yuji</a></b>")
 ABOUT = os.environ.get("ABOUT_MESSAGE", "<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ ™</a></b>\n<blockquote><b>╭━━━━━━━━━━━━━━━━━━━━━\n├›› ᴏᴡɴᴇʀ: <a href='https://t.me/ProKillua'>Kɪʟʟᴜᴀ</a> Zᴏʟᴅʏᴄᴋ\n├›› ʟᴀɴɢᴜᴀɢᴇ: <a href='https://docs.python.org/3'>Pʏᴛʜᴏɴ 3.10</a>\n├›› ʟɪʙʀᴀʀʏ: <a href='https://www.mongodb.com/docs/'>Pʏʀᴏɢʀᴀᴍ ᴠ2</a>\n├›› ᴅᴀᴛᴀʙᴀsᴇ: <a href='https://www.mongodb.com/docs/'>Mᴏɴɢᴏ ᴅʙ</a>\n├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua\n╰━━━━━━━━━━━━━━━━━━━━━</b></blockquote>")
 
-ABOUT_TXT = ""<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ ™</a></b>
+ABOUT_TXT = """<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ ™</a></b>
 <blockquote><b>╭━━━━━━━━━━━━━━━━━━━━━
 ├›› ᴏᴡɴᴇʀ: <a href='https://t.me/ProKillua'>Kɪʟʟᴜᴀ Zᴏʟᴅʏᴄk</a>
 ├›› ʟᴀɴɢᴜᴀɢᴇ: <a href='https://docs.python.org/3'>Pʏᴛʜᴏɴ 3.10</a>
