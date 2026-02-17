@@ -31,7 +31,7 @@ START_PIC = "https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg
 START_IMG = "https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg"
 # Messages
 START_MSG = os.environ.get("START_MSG", "<b>👋 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ᴀᴅᴠᴀɴᴄᴇᴅ ʟɪɴᴋs sʜᴀʀɪɴɢ ʙᴏᴛ!</b>\n\n<blockquote><b>ᴛʜɪs ʙᴏᴛ ɪs ᴀɴ ᴇxᴄʟᴜsɪᴠᴇ ɢᴀᴛᴇᴡᴀʏ ғᴏʀ ᴏᴜʀ ᴄᴏᴍᴍᴜɴɪᴛʏ ᴛᴏ ᴀᴄᴄᴇss ᴄᴏɴᴛᴇɴᴛ sᴇᴄᴜʀᴇʟʏ. ᴘʟᴇᴀsᴇ ᴜsᴇ ᴛʜᴇ ʟɪɴᴋs ᴘʀᴏᴠɪᴅᴇᴅ ɪɴ ᴛʜᴇ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ғɪʟᴇs.</b></blockquote>\n\n<b>• 💠 ᴛʜɪs ɪs ᴀ ᴘʀɪᴠᴀᴛᴇʟʏ ᴍᴀɴᴀɢᴇᴅ sʏsᴛᴇᴍ ᴛᴏ ᴘʀᴏᴛᴇᴄᴛ ᴏᴜʀ ᴄᴏɴᴛᴇɴᴛ ғʀᴏᴍ ᴄᴏᴘʏʀɪɢʜᴛ ɪssᴜᴇs.</b>")
-HELP = os.environ.get("HELP_MESSAGE", "<b><blockquote expandable>» Creator: <a href=https://t.me/proyato>Yato</a>\n» Our Community: <a href=https://t.me/otakuflix_network>Flix Network</a>\n» Anime Channel: <a href=https://t.me/animes_cruise>Anime Cruise</a>\n» Ongoing Anime: <a href=https://t.me/Ongoing_cruise>Ongoing cruise</a>\n» Developer: <a href=https://t.me/onlyyuji>Yuji</a></b>")
+HELP = os.environ.get("HELP_MESSAGE", "<b>›› ᴏғғɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟs:\n<blockquote>╭━━━━━━━━━━━━━━━━━━━━━\n├›› ᴡᴇʙsɪᴛᴇ: <a href='https://www.anireal-anime.site/'>ᴀɴɪʀᴇᴀʟ - ᴀɴɪᴍᴇ</a>\n├›› ᴀɴɪᴍᴇ ᴄʜᴀɴɴᴇʟ: <a href='https://t.me/AniReal_Anime_Zone'>𝐀𝐧𝐢𝐑𝐞𝐚𝐥 - ᴀɴɪᴍᴇ ᴢᴏɴᴇ</a>\n├›› ᴀᴅᴜʟᴛ ᴄʜᴀɴɴᴇʟs: <a href='https://t.me/Hindi_Dub_Animes_Bot?start=req_LTEwMDIyOTkwMDQyNTc'>ʜᴇɴᴛᴀɪ ʜᴜʙ</a> \n├›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/AniReal_Chat_Group_Asia'>𝐀𝐧𝐢𝐑𝐞𝐚𝐥 - Cʜᴀᴛ Gʀᴏᴜᴘ Asɪᴀ</a>\n├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua\n╰━━━━━━━━━━━━━━━━━━━━━</blockquote>\n♻️ ᴍᴜsᴛ ʙᴇ jᴏɪɴ <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ™</a></b>")
 ABOUT = os.environ.get("ABOUT_MESSAGE", "<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ ™</a></b>\n<blockquote><b>╭━━━━━━━━━━━━━━━━━━━━━\n├›› ᴏᴡɴᴇʀ: <a href='https://t.me/ProKillua'>Kɪʟʟᴜᴀ</a> Zᴏʟᴅʏᴄᴋ\n├›› ʟᴀɴɢᴜᴀɢᴇ: <a href='https://docs.python.org/3'>Pʏᴛʜᴏɴ 3.10</a>\n├›› ʟɪʙʀᴀʀʏ: <a href='https://www.mongodb.com/docs/'>Pʏʀᴏɢʀᴀᴍ ᴠ2</a>\n├›› ᴅᴀᴛᴀʙᴀsᴇ: <a href='https://www.mongodb.com/docs/'>Mᴏɴɢᴏ ᴅʙ</a>\n├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua\n╰━━━━━━━━━━━━━━━━━━━━━</b></blockquote>")
 
 ABOUT_TXT = """<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ ™</a></b>
@@ -43,13 +43,15 @@ ABOUT_TXT = """<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated
 ├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua
 ╰━━━━━━━━━━━━━━━━━━━━━</b></blockquote>""" 
 
-CHANNELS_TXT = """<b>›› ᴀɴɪᴍᴇ ᴄʜᴀɴɴᴇʟ: <a href='https://t.me/animes_cruise'>ᴀɴɪᴍᴇ ᴄʀᴜɪsᴇ</a>
-<blockquote expandable>›› ᴍᴏᴠɪᴇs: <a href='https://t.me/movieflixspot'>ᴍᴏᴠɪᴇғʟɪx sᴘᴏᴛ</a>
-›› ᴡᴇʙsᴇʀɪᴇs: <a href='https://t.me/webseries_flix'>ᴡᴇʙsᴇʀɪᴇs ғʟɪx</a>
-›› ᴀᴅᴜʟᴛ ᴄʜᴀɴɴᴇʟs: <a href='https://t.me/hanime_arena'>ᴄᴏʀɴʜᴜʙ</a>
-›› ᴍᴀɴʜᴡᴀ ᴄʜᴀɴɴᴇʟ: <a href='https://t.me/pornhwa_flix'>ᴘᴏʀɴʜᴡᴀ</a>
-›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/otakuflix_network'>ᴏᴛᴀᴋᴜғʟɪx</a>
-›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProYato</b></blockquote>""" # Bhosdiwalo agar developer me Yato ka username hataya to agli baar se koi repo public nhi krunga!!
+CHANNELS_TXT = """<b>›› ᴏғғɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟs:
+<blockquote>╭━━━━━━━━━━━━━━━━━━━━━
+├›› ᴡᴇʙsɪᴛᴇ: <a href='https://www.anireal-anime.site/'>ᴀɴɪʀᴇᴀʟ - ᴀɴɪᴍᴇ</a>
+├›› ᴀɴɪᴍᴇ ᴄʜᴀɴɴᴇʟ: <a href='https://t.me/AniReal_Anime_Zone'>𝐀𝐧𝐢𝐑𝐞𝐚𝐥 - ᴀɴɪᴍᴇ ᴢᴏɴᴇ</a>
+├›› ᴀᴅᴜʟᴛ ᴄʜᴀɴɴᴇʟs: <a href='https://t.me/Hindi_Dub_Animes_Bot?start=req_LTEwMDIyOTkwMDQyNTc'>ʜᴇɴᴛᴀɪ ʜᴜʙ</a> 
+├›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/AniReal_Chat_Group_Asia'>𝐀𝐧𝐢𝐑𝐞𝐚𝐥 - Cʜᴀᴛ Gʀᴏᴜᴘ Asɪᴀ</a>
+├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua
+╰━━━━━━━━━━━━━━━━━━━━━</blockquote>
+♻️ ᴍᴜsᴛ ʙᴇ jᴏɪɴ <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ™</a></b>""" # Bhosdiwalo agar developer me Yato ka username hataya to agli baar se koi repo public nhi krunga!!
 
 #--- ---- ---- --- --- --- - -- -  - - - - - - - - - - - --  - -
 # Default
