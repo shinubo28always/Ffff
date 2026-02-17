@@ -580,7 +580,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                             CHANNELS_TXT
             ),
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton('• ʙᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('home•', callback_data='setting')]
+                [InlineKeyboardButton('• ʙᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('ᴄʟᴏsᴇ •', callback_data='close')]
             ]),
         )
     elif data in ["start", "home"]:
