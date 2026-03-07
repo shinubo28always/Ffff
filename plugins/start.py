@@ -14,7 +14,6 @@ from asyncio import sleep
 from asyncio import Lock
 import random 
 
-from bot import Bot
 from datetime import datetime, timedelta
 from config import *
 from database.database import *
@@ -30,8 +29,8 @@ user_banned_until = {}
 cancel_lock = asyncio.Lock()
 is_canceled = False
 
-@Bot.on_message(filters.command('start') & filters.private)
-async def start_command(client: Bot, message: Message):
+@Client.on_message(filters.command('start') & filters.private)
+async def start_command(client: Client, message: Message):
     user_id = message.from_user.id
 
     if user_id in user_banned_until:
@@ -43,22 +42,29 @@ async def start_command(client: Bot, message: Message):
             
     await add_user(user_id)
 
-   # ✅ Check Force Subscription
-    #if not await is_subscribed(client, user_id):
-        #await temp.delete()
-        #return await not_joined(client, message)
-
-# 
     # Check FSub requirements
-   #  fsub_channels = await get_fsub_channels()
-   #  if fsub_channels:
-    #     is_subscribed, subscription_message, subscription_buttons = await check_subscription_status(client, user_id, fsub_channels)
-   #      if not is_subscribed:
-    #         return await message.reply_text(
-    #             subscription_message,
-    #             reply_markup=subscription_buttons,
-    #             parse_mode=ParseMode.HTML
-     #        )
+    fsub_channels = await get_fsub_channels()
+    if fsub_channels:
+        for channel_id in fsub_channels:
+            try:
+                await client.get_chat_member(channel_id, user_id)
+            except UserNotParticipant:
+                # User not in one of the required channels
+                buttons = []
+                for fsub_id in fsub_channels:
+                    try:
+                        chat = await client.get_chat(fsub_id)
+                        link = chat.invite_link or (await client.export_chat_invite_link(fsub_id))
+                        buttons.append([InlineKeyboardButton(f"Join {chat.title}", url=link)])
+                    except:
+                        pass
+                buttons.append([InlineKeyboardButton("Check Again", url=f"https://t.me/{client.me.username}?start={message.command[1] if len(message.command) > 1 else ''}")])
+                return await message.reply_text(
+                    "<b>You must join our channels to use this bot!</b>",
+                    reply_markup=InlineKeyboardMarkup(buttons)
+                )
+            except Exception as e:
+                print(f"FSub Error: {e}")
 
     text = message.text
     if len(text) > 7:
@@ -211,93 +217,14 @@ async def get_link_creation_time(channel_id):
 # Create a global dictionary to store chat data
 chat_data_cache = {}
 
-async def not_joined(client: Client, message: Message):
-    #temp = await message.reply("<b><i>ᴡᴀɪᴛ ᴀ sᴇᴄ..</i></b>")
 
-    user_id = message.from_user.id
-    buttons = []
-    count = 0
-
-    try:
-        all_channels = await db.show_channels()  # Should return list of (chat_id, mode) tuples
-        for total, chat_id in enumerate(all_channels, start=1):
-            mode = await db.get_channel_mode(chat_id)  # fetch mode 
-
-            await message.reply_chat_action(ChatAction.TYPING)
-
-            if not await is_sub(client, user_id, chat_id):
-                try:
-                    # Cache chat info
-                    if chat_id in chat_data_cache:
-                        data = chat_data_cache[chat_id]
-                    else:
-                        data = await client.get_chat(chat_id)
-                        chat_data_cache[chat_id] = data
-
-                    name = data.title
-
-                    # Generate proper invite link based on the mode
-                    if mode == "on" and not data.username:
-                        invite = await client.create_chat_invite_link(
-                            chat_id=chat_id,
-                            creates_join_request=True,
-                            expire_date=datetime.utcnow() + timedelta(seconds=FSUB_LINK_EXPIRY) if FSUB_LINK_EXPIRY else None
-                            )
-                        link = invite.invite_link
-
-                    else:
-                        if data.username:
-                            link = f"https://t.me/{data.username}"
-                        else:
-                            invite = await client.create_chat_invite_link(
-                                chat_id=chat_id,
-                                expire_date=datetime.utcnow() + timedelta(seconds=FSUB_LINK_EXPIRY) if FSUB_LINK_EXPIRY else None)
-                            link = invite.invite_link
-
-                    buttons.append([InlineKeyboardButton(text=name, url=link)])
-                    count += 1
-                    #await temp.edit(f"<b>{'! ' * count}</b>")
-
-                except Exception as e:
-                    print(f"Error with chat {chat_id}: {e}")
-                    return #await temp.edit(
-                        #f"<b><i>! Eʀʀᴏʀ, Cᴏɴᴛᴀᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ ᴛᴏ sᴏʟᴠᴇ ᴛʜᴇ ɪssᴜᴇs @rohit_1888</i></b>\n"
-                        #f"<blockquote expandable><b>Rᴇᴀsᴏɴ:</b> {e}</blockquote>"
-                    #)
-
-        # Retry Button
-        try:
-            buttons.append([
-                InlineKeyboardButton(
-                    text='♻️ Tʀʏ Aɢᴀɪɴ',
-                    url=f"https://t.me/{client.username}?start={message.command[1]}"
-                )
-            ])
-        except IndexError:
-            pass
-
-        await message.reply_photo(
-            photo=FORCE_PIC,
-            caption=FORCE_MSG.format(
-                first=message.from_user.first_name,
-                last=message.from_user.last_name,
-                username=None if not message.from_user.username else '@' + message.from_user.username,
-                mention=message.from_user.mention,
-                id=message.from_user.id
-            ),
-            reply_markup=InlineKeyboardMarkup(buttons),
-        )
-
-    except Exception as e:
-        print(f"Final Error: {e}")
-
-@Bot.on_callback_query(filters.regex("close"))
-async def close_callback(client: Bot, callback_query):
+@Client.on_callback_query(filters.regex("close"))
+async def close_callback(client: Client, callback_query):
     await callback_query.answer()
     await callback_query.message.delete()
 
-@Bot.on_callback_query(filters.regex("check_sub"))
-async def check_sub_callback(client: Bot, callback_query: CallbackQuery):
+@Client.on_callback_query(filters.regex("check_sub"))
+async def check_sub_callback(client: Client, callback_query: CallbackQuery):
     user_id = callback_query.from_user.id
     fsub_channels = await get_fsub_channels()
     
@@ -328,8 +255,8 @@ REPLY_ERROR = """Usᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ᴀs ᴀ ʀᴇᴘʟʏ ᴛ�
 is_canceled = False
 cancel_lock = Lock()
 
-@Bot.on_message(filters.command('status') & filters.private & is_owner_or_admin)
-async def info(client: Bot, message: Message):   
+@Client.on_message(filters.command('status') & filters.private & is_owner_or_admin)
+async def info(client: Client, message: Message):
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("• Close •", callback_data="close")]])
     
     start_time = time.time()
@@ -340,7 +267,7 @@ async def info(client: Bot, message: Message):
     
     users = await full_userbase()
     now = datetime.now()
-    delta = now - client.uptime
+    delta = now - getattr(client, "uptime", now)
     bottime = get_readable_time(delta.seconds)
     
     await temp_msg.edit(
@@ -351,14 +278,14 @@ async def info(client: Bot, message: Message):
 
 #--------------------------------------------------------------[[ADMIN COMMANDS]]---------------------------------------------------------------------------#
 # Handler for the /cancel command
-@Bot.on_message(filters.command('cancel') & filters.private & is_owner_or_admin)
-async def cancel_broadcast(client: Bot, message: Message):
+@Client.on_message(filters.command('cancel') & filters.private & is_owner_or_admin)
+async def cancel_broadcast(client: Client, message: Message):
     global is_canceled
     async with cancel_lock:
         is_canceled = True
 
-@Bot.on_message(filters.private & filters.command('broadcast') & is_owner_or_admin)
-async def broadcast(client: Bot, message: Message):
+@Client.on_message(filters.private & filters.command('broadcast') & is_owner_or_admin)
+async def broadcast(client: Client, message: Message):
     global is_canceled
     args = message.text.split()[1:]
 
@@ -501,7 +428,7 @@ async def auto_delete(sent_msg, duration):
 #----------------------------------
 
 user_message_count = {}
-user_banned_until = {}
+# user_banned_until = {} # Already defined above
 
 MAX_MESSAGES = 3
 TIME_WINDOW = timedelta(seconds=10)
@@ -509,8 +436,8 @@ BAN_DURATION = timedelta(hours=1)
 
 """
 
-@Bot.on_message(filters.private)
-async def monitor_messages(client: Bot, message: Message):
+@Client.on_message(filters.private)
+async def monitor_messages(client: Client, message: Message):
     user_id = message.from_user.id
     now = datetime.now()
 
@@ -543,8 +470,8 @@ async def monitor_messages(client: Bot, message: Message):
 
 """
 
-@Bot.on_callback_query()
-async def cb_handler(client: Bot, query: CallbackQuery):
+@Client.on_callback_query()
+async def cb_handler(client: Client, query: CallbackQuery):
     data = query.data  
     chat_id = query.message.chat.id
     

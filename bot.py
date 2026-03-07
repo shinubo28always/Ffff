@@ -28,6 +28,10 @@ class Bot(Client):
         self.LOGGER = LOGGER
 
     async def start(self, *args, **kwargs):
+        if not TG_BOT_TOKEN or not API_HASH or not APP_ID:
+            self.LOGGER(__name__).critical("TG_BOT_TOKEN, API_HASH or APP_ID is missing!")
+            sys.exit(1)
+
         await super().start()
         usr_bot_me = await self.get_me()
         self.uptime = datetime.now()
@@ -55,7 +59,7 @@ class Bot(Client):
             await web.TCPSite(app, bind_address, int(PORT)).start()
             self.LOGGER(__name__).info(f"Web server started on {bind_address}:{PORT}")
         except Exception as e:
-            self.LOGGER(__name__).error(f"Failed to start web server: {e}")
+            self.LOGGER(__name__).error(f"Failed to start web server on port {PORT}: {e}")
 
     async def stop(self, *args):
         await super().stop()

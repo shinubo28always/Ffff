@@ -1,7 +1,6 @@
 # Upgraded by @Unrated_Coder from Telegram
 import asyncio
 import base64
-from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import UserNotParticipant, FloodWait, ChatAdminRequired, RPCError
@@ -18,7 +17,7 @@ PAGE_SIZE = 6
 chat_info_cache = {}
 
 # Revoke invite link after 5-10 minutes
-async def revoke_invite_after_5_minutes(client: Bot, channel_id: int, link: str, is_request: bool = False):
+async def revoke_invite_after_5_minutes(client: Client, channel_id: int, link: str, is_request: bool = False):
     await asyncio.sleep(300)  # 10 minutes
     try:
         if is_request:
@@ -31,8 +30,8 @@ async def revoke_invite_after_5_minutes(client: Bot, channel_id: int, link: str,
         print(f"Fᴀɪʟᴇᴅ ᴛᴏ ʀᴇᴠᴏᴋᴇ ɪɴᴠɪᴛᴇ ғᴏʀ ᴄʜᴀɴɴᴇʟ {channel_id}: {e}")
 
 # Add chat command
-@Bot.on_message((filters.command('addchat') | filters.command('addch')) & is_owner_or_admin)
-async def set_channel(client: Bot, message: Message):
+@Client.on_message((filters.command('addchat') | filters.command('addch')) & is_owner_or_admin)
+async def set_channel(client: Client, message: Message):
     try:
         channel_id = int(message.command[1])
     except (IndexError, ValueError):
@@ -85,8 +84,8 @@ async def set_channel(client: Bot, message: Message):
         return await message.reply(f"Unexpected Error: {str(e)}")
 
 # Delete chat command
-@Bot.on_message((filters.command('delchat') | filters.command('delch')) & is_owner_or_admin)
-async def del_channel(client: Bot, message: Message):
+@Client.on_message((filters.command('delchat') | filters.command('delch')) & is_owner_or_admin)
+async def del_channel(client: Client, message: Message):
     try:
         channel_id = int(message.command[1])
     except (IndexError, ValueError):
@@ -96,8 +95,8 @@ async def del_channel(client: Bot, message: Message):
     return await message.reply(f"<b><blockquote expandable>❌ Cʜᴀᴛ {channel_id} ʜᴀs ʙᴇᴇɴ ʀᴇᴍᴏᴠᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ.</b>")
 
 # Channel post command
-@Bot.on_message(filters.command('ch_links') & is_owner_or_admin)
-async def channel_post(client: Bot, message: Message):
+@Client.on_message(filters.command('ch_links') & is_owner_or_admin)
+async def channel_post(client: Client, message: Message):
     status_msg = await message.reply("⏳")
     try:
         channels = await get_channels()
@@ -168,16 +167,16 @@ async def send_channel_page(client, message, channels, page, status_msg=None, ed
     else:
         await message.reply("Sᴇʟᴇᴄᴛ ᴄʜᴀɴɴᴇʟ:", reply_markup=reply_markup)
 
-@Bot.on_callback_query(filters.regex(r"channelpage_(\d+)"))
-async def paginate_channels(client, callback_query):
+@Client.on_callback_query(filters.regex(r"channelpage_(\d+)"))
+async def paginate_channels(client: Client, callback_query):
     page = int(callback_query.data.split("_")[1])
     status_msg = await callback_query.message.edit_text("⏳")
     channels = await get_channels()
     await send_channel_page(client, callback_query.message, channels, page, status_msg=status_msg, edit=True)
 
 # Request post command
-@Bot.on_message(filters.command('reqlink') & is_owner_or_admin)
-async def req_post(client: Bot, message: Message):
+@Client.on_message(filters.command('reqlink') & is_owner_or_admin)
+async def req_post(client: Client, message: Message):
     status_msg = await message.reply("⏳")
     try:
         channels = await get_channels()
@@ -248,16 +247,16 @@ async def send_request_page(client, message, channels, page, status_msg=None, ed
     else:
         await message.reply("Sᴇʟᴇᴄᴛ ᴄʜᴀɴɴᴇʟ:", reply_markup=reply_markup)
 
-@Bot.on_callback_query(filters.regex(r"reqpage_(\d+)"))
-async def paginate_requests(client, callback_query):
+@Client.on_callback_query(filters.regex(r"reqpage_(\d+)"))
+async def paginate_requests(client: Client, callback_query):
     page = int(callback_query.data.split("_")[1])
     status_msg = await callback_query.message.edit_text("⏳")
     channels = await get_channels()
     await send_request_page(client, callback_query.message, channels, page, status_msg=status_msg, edit=True)
 
 # Links command - show all links as text
-@Bot.on_message(filters.command('links') & is_owner_or_admin)
-async def show_links(client: Bot, message: Message):
+@Client.on_message(filters.command('links') & is_owner_or_admin)
+async def show_links(client: Client, message: Message):
     status_msg = await message.reply("⏳")
     try:
         channels = await get_channels()
@@ -345,16 +344,16 @@ async def send_links_page(client, message, channels, page, status_msg=None, edit
     else:
         await message.reply(links_text, reply_markup=reply_markup)
 
-@Bot.on_callback_query(filters.regex(r"linkspage_(\d+)"))
-async def paginate_links(client, callback_query):
+@Client.on_callback_query(filters.regex(r"linkspage_(\d+)"))
+async def paginate_links(client: Client, callback_query):
     page = int(callback_query.data.split("_")[1])
     status_msg = await callback_query.message.edit_text("⏳")
     channels = await get_channels()
     await send_links_page(client, callback_query.message, channels, page, status_msg=status_msg, edit=True)
 
 # Bulk link generation command
-@Bot.on_message(filters.command('bulklink') & is_owner_or_admin)
-async def bulk_link(client: Bot, message: Message):
+@Client.on_message(filters.command('bulklink') & is_owner_or_admin)
+async def bulk_link(client: Client, message: Message):
     user_id = message.from_user.id
 
     if len(message.command) < 2:
@@ -378,8 +377,8 @@ async def bulk_link(client: Bot, message: Message):
             reply_text += f"<b>{idx}. Channel {id_str}</b> (Error: {e})\n\n"
     await message.reply(reply_text)
 
-@Bot.on_message(filters.command('genlink') & filters.private & is_owner_or_admin)
-async def generate_link_command(client: Bot, message: Message):
+@Client.on_message(filters.command('genlink') & filters.private & is_owner_or_admin)
+async def generate_link_command(client: Client, message: Message):
     user_id = message.from_user.id
     if len(message.command) < 2:
         return await message.reply("<b>Usage:</b> <code>/genlink &lt;link&gt;</code>")
@@ -411,8 +410,8 @@ async def generate_link_command(client: Bot, message: Message):
     except Exception as e:
         await message.reply(f"<b>Error storing link:</b> <code>{e}</code>")
 
-@Bot.on_message(filters.command('channels') & is_owner_or_admin)
-async def show_channel_ids(client: Bot, message: Message):
+@Client.on_message(filters.command('channels') & is_owner_or_admin)
+async def show_channel_ids(client: Client, message: Message):
     status_msg = await message.reply("⏳")
     try:
         channels = await get_channels()
@@ -475,8 +474,8 @@ async def send_channel_ids_page(client, message, channels, page, status_msg=None
     else:
         await message.reply(text, reply_markup=reply_markup)
 
-@Bot.on_callback_query(filters.regex(r"channelids_(\d+)"))
-async def paginate_channel_ids(client, callback_query):
+@Client.on_callback_query(filters.regex(r"channelids_(\d+)"))
+async def paginate_channel_ids(client: Client, callback_query):
     page = int(callback_query.data.split("_")[1])
     status_msg = await callback_query.message.edit_text("⏳")
     channels = await get_channels()
