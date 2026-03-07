@@ -2,7 +2,6 @@
 import asyncio
 import sys
 from datetime import datetime
-import pyromod
 from pyrogram import Client
 from pyrogram.enums import ParseMode
 from config import API_HASH, APP_ID, LOGGER, TG_BOT_TOKEN, TG_BOT_WORKERS, PORT, OWNER_ID
