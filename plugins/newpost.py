@@ -1,4 +1,4 @@
-# +++ Modified By Yato [telegram username: @ProYato] +++
+# Upgraded by @Unrated_Coder from Telegram
 import asyncio
 import base64
 from bot import Bot
@@ -37,7 +37,7 @@ async def set_channel(client: Bot, message: Message):
         channel_id = int(message.command[1])
     except (IndexError, ValueError):
         return await message.reply("<b><blockquote expandable>Iɴᴠᴀʟɪᴅ ᴄʜᴀᴛ ID. Exᴀᴍᴘʟᴇ: <code>/addchat &lt;chat_id&gt;</code></b>")
-    
+
     try:
         chat = await client.get_chat(channel_id)
 
@@ -57,10 +57,10 @@ async def set_channel(client: Bot, message: Message):
                         has_permission = True
                 except:
                     pass
-            
+
             if not has_permission:
                 return await message.reply(f"<b><blockquote expandable>I ᴀᴍ ɪɴ {chat.title}, ʙᴜᴛ I ʟᴀᴄᴋ ᴘᴏsᴛɪɴɢ ᴏʀ ᴇᴅɪᴛɪɴɢ ᴘᴇʀᴍɪssɪᴏɴs.</b>")
-        
+
         await save_channel(channel_id)
         base64_invite = await save_encoded_link(channel_id)
         normal_link = f"https://t.me/{client.username}?start={base64_invite}"
@@ -73,7 +73,7 @@ async def set_channel(client: Bot, message: Message):
             f"<b>🔗 Rᴇǫᴜᴇsᴛ Lɪɴᴋ:</b> <code>{request_link}</code>"
         )
         return await message.reply(reply_text)
-    
+
     except UserNotParticipant:
         return await message.reply("<b><blockquote expandable>I ᴀᴍ ɴᴏᴛ ᴀ ᴍᴇᴍʙᴇʀ ᴏғ ᴛʜɪs ᴄʜᴀɴɴᴇʟ. Pʟᴇᴀsᴇ ᴀᴅᴅ ᴍᴇ ᴀɴᴅ ᴛʀʏ ᴀɢᴀɪɴ.</b>")
     except FloodWait as e:
@@ -91,7 +91,7 @@ async def del_channel(client: Bot, message: Message):
         channel_id = int(message.command[1])
     except (IndexError, ValueError):
         return await message.reply("<b><blockquote expandable>Iɴᴠᴀʟɪᴅ ᴄʜᴀᴛ ID. Exᴀᴍᴘʟᴇ: <code>/delch &lt;chat_id&gt;</code></b>")
-    
+
     await delete_channel(channel_id)
     return await message.reply(f"<b><blockquote expandable>❌ Cʜᴀᴛ {channel_id} ʜᴀs ʙᴇᴇɴ ʀᴇᴍᴏᴠᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ.</b>")
 
@@ -114,7 +114,7 @@ async def send_channel_page(client, message, channels, page, status_msg=None, ed
     # Delete status message first
     if status_msg:
         await status_msg.delete()
-        
+
     total_pages = (len(channels) + PAGE_SIZE - 1) // PAGE_SIZE
     start_idx = page * PAGE_SIZE
     end_idx = start_idx + PAGE_SIZE
@@ -124,7 +124,7 @@ async def send_channel_page(client, message, channels, page, status_msg=None, ed
     chat_tasks = []
     for channel_id in channels[start_idx:end_idx]:
         chat_tasks.append(get_chat_info(client, channel_id))
-    
+
     try:
         chat_infos = await asyncio.gather(*chat_tasks, return_exceptions=True)
     except Exception as e:
@@ -137,20 +137,20 @@ async def send_channel_page(client, message, channels, page, status_msg=None, ed
         if isinstance(chat_info, Exception) or chat_info is None:
             print(f"Error getting chat info for channel {channel_id}: {chat_info}")
             continue
-            
+
         try:
             base64_invite = await save_encoded_link(channel_id)
             button_link = f"https://t.me/{client.username}?start={base64_invite}"
-            
+
             row.append(InlineKeyboardButton(chat_info.title, url=button_link))
-            
+
             if len(row) == 2:
                 buttons.append(row)
-                row = [] 
+                row = []
         except Exception as e:
             print(f"Error for channel {channel_id}: {e}")
 
-    if row: 
+    if row:
         buttons.append(row)
 
     nav_buttons = []
@@ -194,7 +194,7 @@ async def send_request_page(client, message, channels, page, status_msg=None, ed
     # Delete status message first
     if status_msg:
         await status_msg.delete()
-        
+
     total_pages = (len(channels) + PAGE_SIZE - 1) // PAGE_SIZE
     start_idx = page * PAGE_SIZE
     end_idx = start_idx + PAGE_SIZE
@@ -204,7 +204,7 @@ async def send_request_page(client, message, channels, page, status_msg=None, ed
     chat_tasks = []
     for channel_id in channels[start_idx:end_idx]:
         chat_tasks.append(get_chat_info(client, channel_id))
-    
+
     try:
         chat_infos = await asyncio.gather(*chat_tasks, return_exceptions=True)
     except Exception as e:
@@ -217,7 +217,7 @@ async def send_request_page(client, message, channels, page, status_msg=None, ed
         if isinstance(chat_info, Exception) or chat_info is None:
             print(f"Error getting chat info for channel {channel_id}: {chat_info}")
             continue
-            
+
         try:
             base64_request = await encode(str(channel_id))
             await save_encoded_link2(channel_id, base64_request)
@@ -227,11 +227,11 @@ async def send_request_page(client, message, channels, page, status_msg=None, ed
 
             if len(row) == 2:
                 buttons.append(row)
-                row = [] 
+                row = []
         except Exception as e:
             print(f"Error generating request link for channel {channel_id}: {e}")
 
-    if row: 
+    if row:
         buttons.append(row)
 
     nav_buttons = []
@@ -241,7 +241,7 @@ async def send_request_page(client, message, channels, page, status_msg=None, ed
         nav_buttons.append(InlineKeyboardButton("• Nᴇxᴛ •", callback_data=f"reqpage_{page+1}"))
 
     if nav_buttons:
-        buttons.append(nav_buttons) 
+        buttons.append(nav_buttons)
     reply_markup = InlineKeyboardMarkup(buttons)
     if edit:
         await message.edit_text("Sᴇʟᴇᴄᴛ ᴀ ᴄʜᴀɴɴᴇʟ ᴛᴏ ʀᴇǫᴜᴇsᴛ ᴀᴄᴄᴇss:", reply_markup=reply_markup)
@@ -274,13 +274,13 @@ async def send_links_page(client, message, channels, page, status_msg=None, edit
     # Delete status message first
     if status_msg:
         await status_msg.delete()
-        
+
     total_pages = (len(channels) + PAGE_SIZE - 1) // PAGE_SIZE
     start_idx = page * PAGE_SIZE
     end_idx = start_idx + PAGE_SIZE
-    
+
     links_text = "<b>➤ Aʟʟ Cʜᴀɴɴᴇʟ Lɪɴᴋs:</b>\n\n"
-    
+
     # Get all chat info and links concurrently
     tasks = []
     for channel_id in channels[start_idx:end_idx]:
@@ -290,7 +290,7 @@ async def send_links_page(client, message, channels, page, status_msg=None, edit
             asyncio.create_task(encode(str(channel_id))),
             return_exceptions=True
         ))
-    
+
     try:
         results = await asyncio.gather(*tasks, return_exceptions=True)
     except Exception as e:
@@ -300,33 +300,33 @@ async def send_links_page(client, message, channels, page, status_msg=None, edit
     for i, result in enumerate(results):
         idx = start_idx + i + 1
         channel_id = channels[start_idx + i]
-        
+
         if isinstance(result, Exception) or result is None or any(isinstance(r, Exception) for r in result):
             print(f"Error getting info for channel {channel_id}: {result}")
             links_text += f"<b>{idx}. Channel {channel_id}</b> (Error)\n\n"
             continue
-            
+
         try:
             chat_info, base64_invite, base64_request = result
             if isinstance(chat_info, Exception):
                 links_text += f"<b>{idx}. Channel {channel_id}</b> (Error)\n\n"
                 continue
-                
+
             await save_encoded_link2(channel_id, base64_request)
             normal_link = f"https://t.me/{client.username}?start={base64_invite}"
             request_link = f"https://t.me/{client.username}?start=req_{base64_request}"
-            
+
             links_text += f"<b>{idx}. {chat_info.title}</b>\n"
             links_text += f"<b>➥ Nᴏʀᴍᴀʟ:</b> <code>{normal_link}</code>\n"
             links_text += f"<b>➤ Rᴇǫᴜᴇsᴛ:</b> <code>{request_link}</code>\n\n"
-            
+
         except Exception as e:
             print(f"Error for channel {channel_id}: {e}")
             links_text += f"<b>{idx}. Channel {channel_id}</b> (Error)\n\n"
 
     # Add pagination info
     links_text += f"<b>📄 Pᴀɢᴇ {page + 1} ᴏғ {total_pages}</b>"
-    
+
     # Create navigation buttons
     buttons = []
     nav_buttons = []
@@ -337,9 +337,9 @@ async def send_links_page(client, message, channels, page, status_msg=None, edit
 
     if nav_buttons:
         buttons.append(nav_buttons)
-    
+
     reply_markup = InlineKeyboardMarkup(buttons) if buttons else None
-    
+
     if edit:
         await message.edit_text(links_text, reply_markup=reply_markup)
     else:
@@ -419,7 +419,7 @@ async def show_channel_ids(client: Bot, message: Message):
         if not channels:
             await status_msg.delete()
             return await message.reply("<b><blockquote expandable>Nᴏ ᴄʜᴀɴɴᴇʟs ᴀʀᴇ ᴀᴠᴀɪʟᴀʙʟᴇ. Pʟᴇᴀsᴇ ᴜsᴇ /addch ᴛᴏ ᴀᴅᴅ ᴀ ᴄʜᴀɴɴᴇʟ.</b>")
-            
+
         await send_channel_ids_page(client, message, channels, page=0, status_msg=status_msg)
     except Exception as e:
         await status_msg.delete()
@@ -429,36 +429,36 @@ async def send_channel_ids_page(client, message, channels, page, status_msg=None
     # Delete status message first
     if status_msg:
         await status_msg.delete()
-        
+
     PAGE_SIZE = 10
     total_pages = (len(channels) + PAGE_SIZE - 1) // PAGE_SIZE
     start_idx = page * PAGE_SIZE
     end_idx = start_idx + PAGE_SIZE
-    
+
     # Get all chat info concurrently
     chat_tasks = []
     for channel_id in channels[start_idx:end_idx]:
         chat_tasks.append(get_chat_info(client, channel_id))
-    
+
     try:
         chat_infos = await asyncio.gather(*chat_tasks, return_exceptions=True)
     except Exception as e:
         print(f"Error gathering chat info: {e}")
         chat_infos = [None] * len(channels[start_idx:end_idx])
-    
+
     text = "<b>➤ Cᴏɴɴᴇᴄᴛᴇᴅ Cʜᴀɴɴᴇʟs (ID & Name):</b>\n\n"
     for i, chat_info in enumerate(chat_infos):
         idx = start_idx + i + 1
         channel_id = channels[start_idx + i]
-        
+
         if isinstance(chat_info, Exception) or chat_info is None:
             text += f"<b>{idx}. Channel {channel_id}</b> (Error)\n"
             continue
-            
+
         text += f"<b>{idx}. {chat_info.title}</b> <code>({channel_id})</code>\n"
-        
+
     text += f"\n<b>📄 Pᴀɢᴇ {page + 1} ᴏғ {total_pages}</b>"
-    
+
     # Navigation buttons
     buttons = []
     nav_buttons = []
@@ -468,7 +468,7 @@ async def send_channel_ids_page(client, message, channels, page, status_msg=None
         nav_buttons.append(InlineKeyboardButton("• Nᴇxᴛ •", callback_data=f"channelids_{page+1}"))
     if nav_buttons:
         buttons.append(nav_buttons)
-        
+
     reply_markup = InlineKeyboardMarkup(buttons) if buttons else None
     if edit:
         await message.edit_text(text, reply_markup=reply_markup)
@@ -490,7 +490,7 @@ async def get_chat_info(client, channel_id):
         # Cache for 5 minutes
         if (datetime.now() - timestamp).total_seconds() < 300:
             return cached_info
-    
+
     # Fetch fresh info
     try:
         chat_info = await client.get_chat(channel_id)
@@ -503,4 +503,3 @@ async def get_chat_info(client, channel_id):
         if channel_id in chat_info_cache:
             return chat_info_cache[channel_id][0]
         raise e
-

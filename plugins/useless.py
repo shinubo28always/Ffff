@@ -40,7 +40,7 @@ async def stats(bot: Bot, message: Message):
         total_users = "Error"
 
     final_text = (
-        "<b>📊 ᴀɴɪʀᴇᴀʟ ᴘʀɪᴠᴀᴛᴇ sᴛᴀᴛs</b>\n\n"
+        "<b>📊 ʟɪɴᴋ sʜᴀʀᴇ ʙᴏᴛ sᴛᴀᴛs</b>\n\n"
         f"<b>🚀 ᴜᴘᴛɪᴍᴇ:</b> <code>{uptime_time}</code>\n"
         f"<b>👤 ᴛᴏᴛᴀʟ ᴜsᴇʀs:</b> <code>{total_users}</code>\n"
         f"<b>🔐 ᴀᴄᴄᴇss:</b> ꜰᴜʟʟ ᴄᴏɴᴛʀᴏʟ"
