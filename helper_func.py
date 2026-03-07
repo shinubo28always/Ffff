@@ -20,6 +20,8 @@ is_admin_filter = IsAdmin()
 
 class IsOwnerOrAdmin(Filter):
     async def __call__(self, client, message):
+        if not message.from_user:
+            return False
         user_id = message.from_user.id
         return user_id == OWNER_ID or await is_admin(user_id)
 

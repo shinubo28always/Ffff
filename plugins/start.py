@@ -58,7 +58,8 @@ async def start_command(client: Client, message: Message):
                         buttons.append([InlineKeyboardButton(f"Join {chat.title}", url=link)])
                     except:
                         pass
-                buttons.append([InlineKeyboardButton("Check Again", url=f"https://t.me/{client.me.username}?start={message.command[1] if len(message.command) > 1 else ''}")])
+                me = client.me or (await client.get_me())
+                buttons.append([InlineKeyboardButton("Check Again", url=f"https://t.me/{me.username}?start={message.command[1] if len(message.command) > 1 else ''}")])
                 return await message.reply_text(
                     "<b>You must join our channels to use this bot!</b>",
                     reply_markup=InlineKeyboardMarkup(buttons)

@@ -10,12 +10,12 @@ load_dotenv()
 
 # Recommended
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
-APP_ID = int(os.environ.get("APP_ID", os.environ.get("API_ID", "0")))
+APP_ID = int(os.environ.get("APP_ID", os.environ.get("API_ID", "0")) or "0")
 API_HASH = os.environ.get("API_HASH", "")
 
 # Main
-OWNER_ID = int(os.environ.get("OWNER_ID", "0"))
-PORT = int(os.environ.get("PORT", "8080"))
+OWNER_ID = int(os.environ.get("OWNER_ID", "0") or "0")
+PORT = int(os.environ.get("PORT", "8080") or "8080")
 
 # Database
 DB_URI = os.environ.get("DB_URI", os.environ.get("DB_URL", os.environ.get("DATABASE_URL", "")))
@@ -61,7 +61,7 @@ USER_REPLY_TEXT = "⚠️ ғᴜᴄᴋ ʏᴏᴜ, ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴍʏ
 
 # Logging
 LOG_FILE_NAME = "links-sharingbot.txt"
-DATABASE_CHANNEL = int(os.environ.get("DATABASE_CHANNEL", "0")) # Channel where user links are stored
+DATABASE_CHANNEL = int(os.environ.get("DATABASE_CHANNEL", "0") or "0") # Channel where user links are stored
 #--- ---- ---- --- --- --- - -- -  - - - - - - - - - - - --  - -
 
 try:
