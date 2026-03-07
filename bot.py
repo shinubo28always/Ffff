@@ -47,9 +47,10 @@ class Bot(Client):
         # Notify owner of bot restart
         if OWNER_ID:
             try:
+                await asyncio.sleep(2)
                 await self.send_message(
                     chat_id=OWNER_ID,
-                    text="<b><blockquote>🤖 Bot Restarted ♻️</blockquote></b>",
+                    text=f"<b><blockquote>🤖 Bot Restarted ♻️\n\nStarted as @{self.username}</blockquote></b>",
                     parse_mode=ParseMode.HTML
                 )
             except Exception as e:

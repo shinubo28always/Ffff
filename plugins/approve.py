@@ -12,7 +12,6 @@ from helper_func import *
 APPROVAL_WAIT_TIME = 5  # seconds 
 AUTO_APPROVE_ENABLED = True  # Toggle for enabling/disabling auto approval 
 
-print("approve.py loaded")
 
 @Client.on_chat_join_request((filters.group | filters.channel) & filters.chat(CHAT_ID) if CHAT_ID else (filters.group | filters.channel))
 async def autoapprove(client, message: ChatJoinRequest):
@@ -69,9 +68,8 @@ async def autoapprove(client, message: ChatJoinRequest):
             print(f"Failed to send welcome message to {user.id}: {e}")
 
 @Client.on_message(filters.command("reqtime") & filters.private & is_owner_or_admin)
-async def set_reqtime(client, message: Message):
+async def set_reqtime(client: Client, message: Message):
     global APPROVAL_WAIT_TIME
-    print(f"reqtime command received from {message.from_user.id}")
     
     if len(message.command) != 2 or not message.command[1].isdigit():
         return await message.reply_text("Usage: <code>/reqtime {seconds}</code>")
@@ -80,9 +78,8 @@ async def set_reqtime(client, message: Message):
     await message.reply_text(f"✅ Request approval time set to <b>{APPROVAL_WAIT_TIME}</b> seconds.")
 
 @Client.on_message(filters.command("reqmode") & filters.private & is_owner_or_admin)
-async def toggle_reqmode(client, message: Message):
+async def toggle_reqmode(client: Client, message: Message):
     global AUTO_APPROVE_ENABLED
-    print(f"reqmode command received from {message.from_user.id}")
     
     if len(message.command) != 2 or message.command[1].lower() not in ["on", "off"]:
         return await message.reply_text("Usage: <code>/reqmode on</code> or <code>/reqmode off</code>")
@@ -93,8 +90,7 @@ async def toggle_reqmode(client, message: Message):
     await message.reply_text(f"Auto-approval has been {status}.")
 
 @Client.on_message(filters.command("approveoff") & filters.private & is_owner_or_admin)
-async def approve_off_command(client, message: Message):
-    print(f"approveoff command received from {message.from_user.id}")
+async def approve_off_command(client: Client, message: Message):
     if len(message.command) != 2 or not message.command[1].lstrip("-").isdigit():
         return await message.reply_text("Usage: <code>/approveoff {channel_id}</code>")
     channel_id = int(message.command[1])
@@ -105,8 +101,7 @@ async def approve_off_command(client, message: Message):
         await message.reply_text(f"❌ Failed to set auto-approval OFF for channel <code>{channel_id}</code>.")
 
 @Client.on_message(filters.command("approveon") & filters.private & is_owner_or_admin)
-async def approve_on_command(client, message: Message):
-    print(f"approveon command received from {message.from_user.id}")
+async def approve_on_command(client: Client, message: Message):
     if len(message.command) != 2 or not message.command[1].lstrip("-").isdigit():
         return await message.reply_text("Usage: <code>/approveon {channel_id}</code>")
     channel_id = int(message.command[1])
