@@ -7,7 +7,7 @@ from database.database import full_userbase
 
 # --- 1. NORMAL USER KE LIYE AUTO-REPLY ---
 # Isme humne commands ko exclude kar diya hai (~filters.command)
-@Client.on_message(filters.private & filters.incoming & ~filters.command(['start', 'stats', 'broadcast', 'cancel']))
+@Client.on_message(filters.private & filters.incoming & ~filters.command)
 async def useless_reply(bot: Client, message: Message):
     user_id = message.from_user.id
     if user_id != OWNER_ID: # Sirf unko reply jaye jo owner nahi hain
