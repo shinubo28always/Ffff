@@ -42,6 +42,7 @@ class Bot(Client):
         await super().start()
         usr_bot_me = await self.get_me()
         self.uptime = datetime.now()
+        self.username = usr_bot_me.username
 
         # Notify owner of bot restart
         try:
@@ -58,7 +59,6 @@ class Bot(Client):
         self.LOGGER(__name__).info(f"Loaded {len(self.plugins)} plugins")
         self.LOGGER(__name__).info("Bot Running..!")
         self.LOGGER(__name__).info(f"{name}")
-        self.username = usr_bot_me.username
 
 
     async def stop(self, *args):
