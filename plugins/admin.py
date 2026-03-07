@@ -1,4 +1,4 @@
-# +++ Modified By [telegram username: @Codeflix_Bots
+# Upgraded by @Unrated_Coder from Telegram
 import os
 import asyncio
 from config import *

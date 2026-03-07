@@ -1,25 +1,27 @@
-# +++ Modified By [telegram username: @Codeflix_Bots
+# Upgraded by @Unrated_Coder from Telegram
 import os
+import re
 from os import environ
 import logging
 from logging.handlers import RotatingFileHandler
 
 # Recommended
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
-APP_ID = int(os.environ.get("APP_ID", ""))
+APP_ID = int(os.environ.get("APP_ID", os.environ.get("API_ID", "")))
 API_HASH = os.environ.get("API_HASH", "")
 
 # Main
 OWNER_ID = int(os.environ.get("OWNER_ID", ""))
-PORT = os.environ.get("PORT", "8080")
+PORT = int(os.environ.get("PORT", "8080"))
 
 # Database
-DB_URI = os.environ.get("DB_URI", "")
+DB_URI = os.environ.get("DB_URI", os.environ.get("DB_URL", os.environ.get("DATABASE_URL", "")))
 DB_NAME = os.environ.get("DB_NAME", "Links-Share")
 
 #Auto approve 
+id_pattern = re.compile(r'^.\d+$')
 CHAT_ID = [int(app_chat_id) if id_pattern.search(app_chat_id) else app_chat_id for app_chat_id in environ.get('CHAT_ID', '').split()] # dont change anything 
-TEXT = environ.get("APPROVED_WELCOME_TEXT", "<b>{mention},\n\nʏᴏᴜʀ ʀᴇǫᴜᴇsᴛ ᴛᴏ ᴊᴏɪɴ {title} ɪs ᴀᴘᴘʀᴏᴠᴇᴅ.\n\‣ ᴘᴏᴡᴇʀᴇᴅ ʙʏ @Codeflix_Bots</b>")
+TEXT = environ.get("APPROVED_WELCOME_TEXT", "<b>{mention},\n\nʏᴏᴜʀ ʀᴇǫᴜᴇsᴛ ᴛᴏ ᴊᴏɪɴ {title} ɪs ᴀᴘᴘʀᴏᴠᴇᴅ.\n\‣ ᴘᴏᴡᴇʀᴇᴅ ʙʏ @Unrated_Coder</b>")
 APPROVED = environ.get("APPROVED_WELCOME", "on").lower()
 
 # Default
@@ -27,31 +29,27 @@ TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "40"))
 #--- ---- ---- --- --- --- - -- -  - - - - - - - - - - - --  - -
 
 # Start pic
-START_PIC = "https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg"
-START_IMG = "https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg"
+START_PIC = os.environ.get("START_PIC", "https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg")
+START_IMG = os.environ.get("START_IMG", "https://graph.org/file/7228e9fe7ebf6145cca11-38b598b785ee91950b.jpg")
 # Messages
 START_MSG = os.environ.get("START_MSG", "<b>👋 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ᴀᴅᴠᴀɴᴄᴇᴅ ʟɪɴᴋs sʜᴀʀɪɴɢ ʙᴏᴛ!</b>\n\n<blockquote><b>ᴛʜɪs ʙᴏᴛ ɪs ᴀɴ ᴇxᴄʟᴜsɪᴠᴇ ɢᴀᴛᴇᴡᴀʏ ғᴏʀ ᴏᴜʀ ᴄᴏᴍᴍᴜɴɪᴛʏ ᴛᴏ ᴀᴄᴄᴇss ᴄᴏɴᴛᴇɴᴛ sᴇᴄᴜʀᴇʟʏ. ᴘʟᴇᴀsᴇ ᴜsᴇ ᴛʜᴇ ʟɪɴᴋs ᴘʀᴏᴠɪᴅᴇᴅ ɪɴ ᴛʜᴇ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ғɪʟᴇs.</b></blockquote>\n\n<b>• 💠 ᴛʜɪs ɪs ᴀ ᴘʀɪᴠᴀᴛᴇʟʏ ᴍᴀɴᴀɢᴇᴅ sʏsᴛᴇᴍ ᴛᴏ ᴘʀᴏᴛᴇᴄᴛ ᴏᴜʀ ᴄᴏɴᴛᴇɴᴛ ғʀᴏᴍ ᴄᴏᴘʏʀɪɢʜᴛ ɪssᴜᴇs.</b>")
-HELP = os.environ.get("HELP_MESSAGE", "<b>›› ᴏғғɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟs:\n<blockquote>╭━━━━━━━━━━━━━━━━━━━━━\n├›› ᴡᴇʙsɪᴛᴇ: <a href='https://www.anireal-anime.site/'>ᴀɴɪʀᴇᴀʟ - ᴀɴɪᴍᴇ</a>\n├›› ᴀɴɪᴍᴇ ᴄʜᴀɴɴᴇʟ: <a href='https://t.me/AniReal_Anime_Zone'>𝐀𝐧𝐢𝐑𝐞𝐚𝐥 - ᴀɴɪᴍᴇ ᴢᴏɴᴇ</a>\n├›› ᴀᴅᴜʟᴛ ᴄʜᴀɴɴᴇʟs: <a href='https://t.me/Hindi_Dub_Animes_Bot?start=req_LTEwMDIyOTkwMDQyNTc'>ʜᴇɴᴛᴀɪ ʜᴜʙ</a> \n├›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/AniReal_Chat_Group_Asia'>𝐀𝐧𝐢𝐑𝐞𝐚𝐥 - Cʜᴀᴛ Gʀᴏᴜᴘ Asɪᴀ</a>\n├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua\n╰━━━━━━━━━━━━━━━━━━━━━</blockquote>\n♻️ ᴍᴜsᴛ ʙᴇ jᴏɪɴ <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ™</a></b>")
-ABOUT = os.environ.get("ABOUT_MESSAGE", "<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ ™</a></b>\n<blockquote><b>╭━━━━━━━━━━━━━━━━━━━━━\n├›› ᴏᴡɴᴇʀ: <a href='https://t.me/ProKillua'>Kɪʟʟᴜᴀ</a> Zᴏʟᴅʏᴄᴋ\n├›› ʟᴀɴɢᴜᴀɢᴇ: <a href='https://docs.python.org/3'>Pʏᴛʜᴏɴ 3.10</a>\n├›› ʟɪʙʀᴀʀʏ: <a href='https://www.mongodb.com/docs/'>Pʏʀᴏɢʀᴀᴍ ᴠ2</a>\n├›› ᴅᴀᴛᴀʙᴀsᴇ: <a href='https://www.mongodb.com/docs/'>Mᴏɴɢᴏ ᴅʙ</a>\n├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua\n╰━━━━━━━━━━━━━━━━━━━━━</b></blockquote>")
+HELP = os.environ.get("HELP_MESSAGE", "<b>›› ᴏғғɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟs:\n<blockquote>╭━━━━━━━━━━━━━━━━━━━━━\n├›› ᴜᴘᴅᴀᴛᴇs: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ</a>\n├›› sᴜᴘᴘᴏʀᴛ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ</a>\n├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Unrated_Coder\n╰━━━━━━━━━━━━━━━━━━━━━</blockquote></b>")
+ABOUT = os.environ.get("ABOUT_MESSAGE", "<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ</a></b>\n<blockquote><b>╭━━━━━━━━━━━━━━━━━━━━━\n├›› ʟᴀɴɢᴜᴀɢᴇ: <a href='https://docs.python.org/3'>Pʏᴛʜᴏɴ 3.10</a>\n├›› ʟɪʙʀᴀʀʏ: <a href='https://www.mongodb.com/docs/'>Pʏʀᴏɢʀᴀᴍ ᴠ2</a>\n├›› ᴅᴀᴛᴀʙᴀsᴇ: <a href='https://www.mongodb.com/docs/'>Mᴏɴɢᴏ ᴅʙ</a>\n├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Unrated_Coder\n╰━━━━━━━━━━━━━━━━━━━━━</b></blockquote>")
 
-ABOUT_TXT = """<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ ™</a></b>
+ABOUT_TXT = """<b>›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ</a></b>
 <blockquote><b>╭━━━━━━━━━━━━━━━━━━━━━
-├›› ᴏᴡɴᴇʀ: <a href='https://t.me/ProKillua'>Kɪʟʟᴜᴀ Zᴏʟᴅʏᴄk</a>
 ├›› ʟᴀɴɢᴜᴀɢᴇ: <a href='https://docs.python.org/3'>Pʏᴛʜᴏɴ 3.10</a>
 ├›› ʟɪʙʀᴀʀʏ: <a href='https://www.mongodb.com/docs/'>Pʏʀᴏɢʀᴀᴍ ᴠ2</a>
 ├›› ᴅᴀᴛᴀʙᴀsᴇ: <a href='https://www.mongodb.com/docs/'>Mᴏɴɢᴏ ᴅʙ</a>
-├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua
+├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Unrated_Coder
 ╰━━━━━━━━━━━━━━━━━━━━━</b></blockquote>""" 
 
 CHANNELS_TXT = """<b>›› ᴏғғɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟs:
 <blockquote>╭━━━━━━━━━━━━━━━━━━━━━
-├›› ᴡᴇʙsɪᴛᴇ: <a href='https://www.anireal-anime.site/'>ᴀɴɪʀᴇᴀʟ - ᴀɴɪᴍᴇ</a>
-├›› ᴀɴɪᴍᴇ ᴄʜᴀɴɴᴇʟ: <a href='https://t.me/AniReal_Anime_Zone'>𝐀𝐧𝐢𝐑𝐞𝐚𝐥 - ᴀɴɪᴍᴇ ᴢᴏɴᴇ</a>
-├›› ᴀᴅᴜʟᴛ ᴄʜᴀɴɴᴇʟs: <a href='https://t.me/Hindi_Dub_Animes_Bot?start=req_LTEwMDIyOTkwMDQyNTc'>ʜᴇɴᴛᴀɪ ʜᴜʙ</a> 
-├›› ᴄᴏᴍᴍᴜɴɪᴛʏ: <a href='https://t.me/AniReal_Chat_Group_Asia'>𝐀𝐧𝐢𝐑𝐞𝐚𝐥 - Cʜᴀᴛ Gʀᴏᴜᴘ Asɪᴀ</a>
-├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @ProKillua
-╰━━━━━━━━━━━━━━━━━━━━━</blockquote>
-♻️ ᴍᴜsᴛ ʙᴇ jᴏɪɴ <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ™</a></b>""" # Bhosdiwalo agar developer me Yato ka username hataya to agli baar se koi repo public nhi krunga!!
+├›› ᴜᴘᴅᴀᴛᴇs: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ</a>
+├›› sᴜᴘᴘᴏʀᴛ: <a href='https://t.me/Unrated_Coder'>Uɴʀᴀᴛᴇᴅ Cᴏᴅᴇʀ</a>
+├›› ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Unrated_Coder
+╰━━━━━━━━━━━━━━━━━━━━━</blockquote></b>"""
 
 #--- ---- ---- --- --- --- - -- -  - - - - - - - - - - - --  - -
 # Default
@@ -65,14 +63,14 @@ DATABASE_CHANNEL = int(os.environ.get("DATABASE_CHANNEL", "")) # Channel where u
 
 try:
     ADMINS = []
-    for x in (os.environ.get("ADMINS", "6497757690").split()):
+    for x in (os.environ.get("ADMINS", "").split()):
         ADMINS.append(int(x))
 except ValueError:
     raise Exception("Your Admins list does not contain valid integers.")
 
 # Admin == OWNER_ID
-ADMINS.append(OWNER_ID)
-ADMINS.append(6497757690)
+if OWNER_ID and OWNER_ID not in ADMINS:
+    ADMINS.append(OWNER_ID)
 
 
 logging.basicConfig(

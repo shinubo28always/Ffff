@@ -1,4 +1,4 @@
-# +++ Modified By Yato [telegram username: @i_killed_my_clan & @ProYato] +++ # aNDI BANDI SANDI JISNE BHI CREDIT HATAYA USKI BANDI RAndi 
+# Upgraded by @Unrated_Coder from Telegram
 import os
 import asyncio
 from config import *
@@ -11,13 +11,6 @@ from helper_func import *
 # Default settings
 APPROVAL_WAIT_TIME = 5  # seconds 
 AUTO_APPROVE_ENABLED = True  # Toggle for enabling/disabling auto approval 
-
-async def get_user_client():
-    global user_client
-    if user_client is None:
-        user_client = UserClient("userbot", session_string=USER_SESSION, api_id=APP_ID, api_hash=API_HASH)
-        await user_client.start()
-    return user_client
 
 @Client.on_chat_join_request((filters.group | filters.channel) & filters.chat(CHAT_ID) if CHAT_ID else (filters.group | filters.channel))
 async def autoapprove(client, message: ChatJoinRequest):
@@ -48,23 +41,30 @@ async def autoapprove(client, message: ChatJoinRequest):
         # User is not a member, handle accordingly
         pass
 
-    await client.approve_chat_join_request(chat_id=chat.id, user_id=user.id)
+    try:
+        await client.approve_chat_join_request(chat_id=chat.id, user_id=user.id)
+    except Exception as e:
+        print(f"Failed to approve {user.id} in {chat.id}: {e}")
+        return
     
     if APPROVED == "on":
-        invite_link = await client.export_chat_invite_link(chat.id)
-        buttons = [
-            [InlineKeyboardButton('• ᴊᴏɪɴ ᴍʏ ᴜᴘᴅᴀᴛᴇs •', url='https://t.me/Codeflix_Bots')],
-            [InlineKeyboardButton(f'• ᴊᴏɪɴ {chat.title} •', url=invite_link)]
-        ]
-        markup = InlineKeyboardMarkup(buttons)
-        caption = f"<b>ʜᴇʏ {user.mention()},\n\n<blockquote> ʏᴏᴜʀ ʀᴇǫᴜᴇsᴛ ᴛᴏ ᴊᴏɪɴ _{chat.title} ʜᴀs ʙᴇᴇɴ ᴀᴘᴘʀᴏᴠᴇᴅ.</blockquote> </b>"
-        
-        await client.send_photo(
-            chat_id=user.id,
-            photo='https://telegra.ph/file/f3d3aff9ec422158feb05-d2180e3665e0ac4d32.jpg',
-            caption=caption,
-            reply_markup=markup
-        )
+        try:
+            invite_link = await client.export_chat_invite_link(chat.id)
+            buttons = [
+                [InlineKeyboardButton('• ᴊᴏɪɴ ᴍʏ ᴜᴘᴅᴀᴛᴇs •', url='https://t.me/Unrated_Coder')],
+                [InlineKeyboardButton(f'• ᴊᴏɪɴ {chat.title} •', url=invite_link)]
+            ]
+            markup = InlineKeyboardMarkup(buttons)
+            caption = TEXT.format(mention=user.mention, title=chat.title)
+
+            await client.send_photo(
+                chat_id=user.id,
+                photo=START_PIC,
+                caption=caption,
+                reply_markup=markup
+            )
+        except Exception as e:
+            print(f"Failed to send welcome message to {user.id}: {e}")
 
 @Client.on_message(filters.command("reqtime") & is_owner_or_admin)
 async def set_reqtime(client, message: Message):

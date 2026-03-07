@@ -1,4 +1,4 @@
-# +++ Modified By [telegram username: @Codeflix_Bots
+# Upgraded by @Unrated_Coder from Telegram
 import asyncio
 import sys
 from datetime import datetime
@@ -43,7 +43,7 @@ class Bot(Client):
             self.LOGGER(__name__).warning(f"Failed to notify owner ({OWNER_ID}) of bot start: {e}")
 
         self.set_parse_mode(ParseMode.HTML)
-        self.LOGGER(__name__).info("Bot Running..!\n\nHosted by \nhttps://t.me/Unrated_Coder")
+        self.LOGGER(__name__).info("Bot Running..!")
         self.LOGGER(__name__).info(f"{name}")
         self.username = usr_bot_me.username
 
@@ -52,7 +52,7 @@ class Bot(Client):
             app = web.AppRunner(await web_server())
             await app.setup()
             bind_address = "0.0.0.0"
-            await web.TCPSite(app, bind_address, PORT).start()
+            await web.TCPSite(app, bind_address, int(PORT)).start()
             self.LOGGER(__name__).info(f"Web server started on {bind_address}:{PORT}")
         except Exception as e:
             self.LOGGER(__name__).error(f"Failed to start web server: {e}")
