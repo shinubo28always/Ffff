@@ -45,20 +45,19 @@ class Bot(Client):
         self.username = usr_bot_me.username
 
         # Notify owner of bot restart
-        try:
-            await self.send_message(
-                chat_id=OWNER_ID,
-                text="<b><blockquote>🤖 Bot Restarted ♻️</blockquote></b>",
-                parse_mode=ParseMode.HTML
-            )
-        except Exception as e:
-            self.LOGGER(__name__).warning(f"Failed to notify owner ({OWNER_ID}) of bot start: {e}")
+        if OWNER_ID:
+            try:
+                await self.send_message(
+                    chat_id=OWNER_ID,
+                    text="<b><blockquote>🤖 Bot Restarted ♻️</blockquote></b>",
+                    parse_mode=ParseMode.HTML
+                )
+            except Exception as e:
+                self.LOGGER(__name__).warning(f"Failed to notify owner ({OWNER_ID}) of bot start: {e}")
 
         self.set_parse_mode(ParseMode.HTML)
-        self.LOGGER(__name__).info(f"Bot Started as {self.username}")
-        self.LOGGER(__name__).info(f"Loaded {len(self.plugins)} plugins")
+        self.LOGGER(__name__).info(f"Bot Started as @{self.username}")
         self.LOGGER(__name__).info("Bot Running..!")
-        self.LOGGER(__name__).info(f"{name}")
 
 
     async def stop(self, *args):
