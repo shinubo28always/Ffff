@@ -14,6 +14,8 @@ from database.database import is_admin
 
 class IsAdmin(Filter):
     async def __call__(self, client, message):
+        if not message.from_user:
+            return False
         return await is_admin(message.from_user.id)
 
 is_admin_filter = IsAdmin()

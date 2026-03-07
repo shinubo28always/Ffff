@@ -5,7 +5,7 @@ from datetime import datetime
 from pyrogram import Client
 from pyrogram.enums import ParseMode
 from config import API_HASH, APP_ID, LOGGER, TG_BOT_TOKEN, TG_BOT_WORKERS, PORT, OWNER_ID
-from plugins import web_server
+from webserver import web_server
 from aiohttp import web
 
 name = """
@@ -54,6 +54,8 @@ class Bot(Client):
             self.LOGGER(__name__).warning(f"Failed to notify owner ({OWNER_ID}) of bot start: {e}")
 
         self.set_parse_mode(ParseMode.HTML)
+        self.LOGGER(__name__).info(f"Bot Started as {self.username}")
+        self.LOGGER(__name__).info(f"Loaded {len(self.plugins)} plugins")
         self.LOGGER(__name__).info("Bot Running..!")
         self.LOGGER(__name__).info(f"{name}")
         self.username = usr_bot_me.username
