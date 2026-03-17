@@ -43,29 +43,48 @@ async def start_command(client: Client, message: Message):
     await add_user(user_id)
 
     # Check FSub requirements
-    fsub_channels = await get_fsub_channels()
-    if fsub_channels:
-        for channel_id in fsub_channels:
+    fsub_data = await get_fsub_channels()
+    if fsub_data:
+        must_join = []
+        for ch in fsub_data:
+            channel_id = ch['channel_id']
+            mode = ch.get('mode', 'normal')
+
             try:
-                await client.get_chat_member(channel_id, user_id)
+                member = await client.get_chat_member(channel_id, user_id)
+                if mode == "request" and member.status == ChatMemberStatus.BANNED:
+                     must_join.append(ch)
             except UserNotParticipant:
-                # User not in one of the required channels
-                buttons = []
-                for fsub_id in fsub_channels:
-                    try:
-                        chat = await client.get_chat(fsub_id)
+                must_join.append(ch)
+            except Exception as e:
+                print(f"FSub Check Error for {channel_id}: {e}")
+
+        if must_join:
+            buttons = []
+            for ch in must_join:
+                try:
+                    fsub_id = ch['channel_id']
+                    mode = ch.get('mode', 'normal')
+                    chat = await client.get_chat(fsub_id)
+
+                    if mode == "request":
+                        # For request mode, we generate a link that creates a join request if not already present
+                        link = chat.invite_link or (await client.create_chat_invite_link(fsub_id, creates_join_request=True)).invite_link
+                    else:
                         link = chat.invite_link or (await client.export_chat_invite_link(fsub_id))
-                        buttons.append([InlineKeyboardButton(f"Join {chat.title}", url=link)])
-                    except:
-                        pass
+
+                    buttons.append([InlineKeyboardButton(f"Join {chat.title}", url=link)])
+                except Exception as e:
+                    print(f"FSub Button Error: {e}")
+
+            if buttons:
                 me = client.me or (await client.get_me())
-                buttons.append([InlineKeyboardButton("Check Again", url=f"https://t.me/{me.username}?start={message.command[1] if len(message.command) > 1 else ''}")])
+                start_param = message.command[1] if len(message.command) > 1 else ''
+                buttons.append([InlineKeyboardButton("🔄 Check Again", url=f"https://t.me/{me.username}?start={start_param}")])
                 return await message.reply_text(
-                    "<b>You must join our channels to use this bot!</b>",
+                    "<b>👋 Welcome!\n\nTo use this bot, you must join our channels first. Click the buttons below to join, then click 'Check Again'.</b>",
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
-            except Exception as e:
-                print(f"FSub Error: {e}")
 
     text = message.text
     if len(text) > 7:

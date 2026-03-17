@@ -59,6 +59,11 @@ Powered by **Pyrogram**, it provides a seamless experience for users to join cha
 - <b>`/approveon`</b> — Enable auto request approval for a specific channel.
 - <b>`/approveoff`</b> — Disable auto request approval for a specific channel.
 
+### Force Subscription (Owner/Admins)
+- <b>`/add_fsub <channel_id> <mode>`</b> — Add a channel to FSub list (modes: `normal`, `request`)
+- <b>`/fsub`</b> — See all FSub channels
+- <b>`/del_fsub <channel_id>`</b> — Remove a channel from FSub list
+
 ### Admin Commands
 - <b>`/stats`</b> — Show bot stats (owner only)
 - <b>`/status`</b> — Show bot status (admins)

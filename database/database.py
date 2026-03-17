@@ -268,22 +268,25 @@ async def get_link_creation_time(channel_id: int):
         print(f"Error fetching link creation time for channel {channel_id}: {e}")
         return None
 
-async def add_fsub_channel(channel_id: int) -> bool:
-    """Add a channel to the FSub list."""
+async def add_fsub_channel(channel_id: int, mode: str = "normal") -> bool:
+    """Add a channel to the FSub list with a specific mode."""
     if not isinstance(channel_id, int):
         print(f"Invalid channel_id: {channel_id}")
         return False
     
     try:
-        existing_channel = await fsub_channels_collection.find_one({'channel_id': channel_id})
-        if existing_channel:
-            return False
-        
-        await fsub_channels_collection.insert_one({
-            'channel_id': channel_id,
-            'created_at': datetime.utcnow(),
-            'status': 'active'
-        })
+        await fsub_channels_collection.update_one(
+            {'channel_id': channel_id},
+            {
+                '$set': {
+                    'channel_id': channel_id,
+                    'mode': mode,
+                    'created_at': datetime.utcnow(),
+                    'status': 'active'
+                }
+            },
+            upsert=True
+        )
         return True
     except Exception as e:
         print(f"Error adding FSub channel {channel_id}: {e}")
@@ -298,11 +301,11 @@ async def remove_fsub_channel(channel_id: int) -> bool:
         print(f"Error removing FSub channel {channel_id}: {e}")
         return False
 
-async def get_fsub_channels() -> List[int]:
-    """Get all active FSub channel IDs."""
+async def get_fsub_channels() -> List[dict]:
+    """Get all active FSub channel data."""
     try:
         channels = await fsub_channels_collection.find({'status': 'active'}).to_list(None)
-        return [channel['channel_id'] for channel in channels]
+        return channels
     except Exception as e:
         print(f"Error fetching FSub channels: {e}")
         return []
